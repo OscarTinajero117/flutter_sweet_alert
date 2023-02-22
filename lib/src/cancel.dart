@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sweet_alert/flutter_sweet_alert.dart';
-// import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
-// import 'dart:ui';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 
 class CancelView extends StatefulWidget {
