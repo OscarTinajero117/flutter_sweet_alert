@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
+// import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
 import 'dart:ui';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
@@ -13,9 +13,9 @@ class SuccessView extends StatefulWidget {
 
 class SuccessViewState extends State<SuccessView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
-  SequenceAnimation sequenceAnimation;
+  late SequenceAnimation sequenceAnimation;
 
   @override
   void initState() {
@@ -67,10 +67,13 @@ class _CustomPainter extends CustomPainter {
   double strokeEnd;
   double total = 0;
 
-  double _strokeStart;
-  double _strokeEnd;
+  late double _strokeStart;
+  late double _strokeEnd;
 
-  _CustomPainter({this.strokeEnd, this.strokeStart}) {
+  _CustomPainter({
+    required this.strokeEnd,
+    required this.strokeStart,
+  }) {
     _paint.strokeCap = StrokeCap.round;
     _paint.style = PaintingStyle.stroke;
 

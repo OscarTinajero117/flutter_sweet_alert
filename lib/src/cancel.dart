@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sweetalert/sweetalert.dart';
-import 'dart:math' as Math;
+import 'package:flutter_sweet_alert/flutter_sweet_alert.dart';
+// import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
-import 'dart:ui';
+// import 'dart:ui';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 
 class CancelView extends StatefulWidget {
@@ -14,13 +14,13 @@ class CancelView extends StatefulWidget {
 
 class CancelViewState extends State<CancelView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
-  SequenceAnimation sequenceAnimation;
+  late SequenceAnimation sequenceAnimation;
 
   @override
   void initState() {
-    int factor = 50;
+    // int factor = 50;
     animationController = new AnimationController(vsync: this);
 
     sequenceAnimation = new SequenceAnimationBuilder()
@@ -60,15 +60,15 @@ class CancelViewState extends State<CancelView>
 
   @override
   void dispose() {
-    animationController?.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
-  /**
-   * new CustomPaint(
-      painter: new SuccessPainter(color: SweetAlert.danger),
-      )
-   */
+  ///```dart
+  ///new CustomPaint(
+  /// painter: new SuccessPainter(color: SweetAlert.danger),
+  ///)
+  ///```
   @override
   Widget build(BuildContext context) {
     return new AnimatedBuilder(
@@ -80,7 +80,7 @@ class CancelViewState extends State<CancelView>
             origin: new Offset(0.0, 32.0),
             child: new CustomPaint(
               painter: new _CustomPainter(
-                  color: SweetAlert.danger,
+                  color: FlutterSweetAlert.danger,
                   fade: sequenceAnimation['fade'].value,
                   factor: sequenceAnimation['fact'].value),
             ),
@@ -98,7 +98,11 @@ class _CustomPainter extends CustomPainter {
   final double fade;
   final double factor;
 
-  _CustomPainter({this.color, this.fade, this.factor}) {
+  _CustomPainter({
+    required this.color,
+    required this.fade,
+    required this.factor,
+  }) {
     _paint.strokeCap = StrokeCap.round;
     _paint.style = PaintingStyle.stroke;
     _paint.strokeWidth = 4.0;

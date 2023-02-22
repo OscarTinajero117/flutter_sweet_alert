@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
-import 'package:sweetalert/sweetalert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sweet_alert/flutter_sweet_alert.dart';
 
-import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
 
 void main() => runApp(MyApp());
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -78,108 +76,201 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               new Text("Basic usage"),
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: () {
-                  SweetAlert.show(context, title: "Just show a message");
+                  FlutterSweetAlert.show(
+                    context: context,
+                    title: "Just show a message",
+                    style: FlutterSweetAlertStyle.success,
+                    onPress: null,
+                  );
                 },
                 child: new Text("Try me"),
-                color: SweetAlert.success,
-                textColor: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterSweetAlert.success,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  // Background color
+                ),
               ),
               new Text("Title with subtitle"),
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
-                      title: "Just show a message",
-                      subtitle: "Sweet alert is pretty");
+                  FlutterSweetAlert.show(
+                    context: context,
+                    title: "Just show a message",
+                    subtitle: "Sweet alert is pretty",
+                    style: FlutterSweetAlertStyle.success,
+                    onPress: null,
+                  );
                 },
                 child: new Text("Try me"),
-                color: SweetAlert.success,
-                textColor: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterSweetAlert.success,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  // Background color
+                ),
               ),
               new Text("A success message"),
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
-                      title: "Just show a message",
-                      subtitle: "Sweet alert is pretty",
-                      style: SweetAlertStyle.success);
+                  FlutterSweetAlert.show(
+                    context: context,
+                    title: "Just show a message",
+                    subtitle: "Sweet alert is pretty",
+                    style: FlutterSweetAlertStyle.success,
+                    onPress: null,
+                  );
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterSweetAlert.success,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  // Background color
+                ),
                 child: new Text("Try me"),
-                color: SweetAlert.success,
-                textColor: Colors.white,
               ),
               new Text(
                   "A warning message,with a function action on \"Confirm\"-button"),
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
-                      title: "Just show a message",
-                      subtitle: "Sweet alert is pretty",
-                      style: SweetAlertStyle.confirm,
-                      showCancelButton: true, onPress: (bool isConfirm) {
-                    if (isConfirm) {
-                      SweetAlert.show(context,style: SweetAlertStyle.success,title: "Success");
+                  FlutterSweetAlert.show(
+                    context: context,
+                    title: "Just show a message",
+                    subtitle: "Sweet alert is pretty",
+                    style: FlutterSweetAlertStyle.confirm,
+                    showCancelButton: true,
+                    onPress: (isConfirm) {
+                      if (isConfirm) {
+                        FlutterSweetAlert.show(
+                          context: context,
+                          style: FlutterSweetAlertStyle.success,
+                          title: "Success",
+                          subtitle: "You clicked confirm",
+                          onPress: null,
+                        );
 
-                      // return false to keep dialog
-                      return false;
-                    }
-                  });
+                        // return false to keep dialog
+                        return false;
+                      }
+                      return true;
+                    },
+                  );
                 },
                 child: new Text("Try me"),
-                color: SweetAlert.success,
-                textColor: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterSweetAlert.success,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  // Background color
+                ),
               ),
               new Text("Do a job that may take some time"),
-              new RaisedButton(
+              new ElevatedButton(
                 onPressed: () {
-                  SweetAlert.show(context,
+                  FlutterSweetAlert.show(
+                      context: context,
+                      title: "Just show a message",
                       subtitle: "Do you want to delete this message",
-                      style: SweetAlertStyle.confirm,
-                      showCancelButton: true, onPress: (bool isConfirm) {
-                    if(isConfirm){
-                      SweetAlert.show(context,subtitle: "Deleting...", style: SweetAlertStyle.loading);
-                      new Future.delayed(new Duration(seconds: 2),(){
-                        SweetAlert.show(context,subtitle: "Success!", style: SweetAlertStyle.success);
-                      });
-                    }else{
-                      SweetAlert.show(context,subtitle: "Canceled!", style: SweetAlertStyle.error);
-                    }
-                    // return false to keep dialog
-                    return false;
-                  });
-                },
-                child: new Text("Try me"),
-                color: SweetAlert.success,
-                textColor: Colors.white,
-              ),
-
-
-              new Text("Do a job that may fail"),
-              new RaisedButton(
-                onPressed: () {
-                  SweetAlert.show(context,
-                      subtitle: "Do you want to delete this message",
-                      style: SweetAlertStyle.confirm,
-                      showCancelButton: true, onPress: (bool isConfirm) {
+                      style: FlutterSweetAlertStyle.confirm,
+                      showCancelButton: true,
+                      onPress: (bool isConfirm) {
                         if (isConfirm) {
-                        //Return false to keep dialog
-                          if(isConfirm){
-                            SweetAlert.show(context,subtitle: "Deleting...", style: SweetAlertStyle.loading);
-                            new Future.delayed(new Duration(seconds: 2),(){
-                              SweetAlert.show(context,subtitle: "Job fail!", style: SweetAlertStyle.error);
-                            });
-                          }else{
-                            SweetAlert.show(context,subtitle: "Canceled!", style: SweetAlertStyle.error);
-                          }
-                          return false;
+                          FlutterSweetAlert.show(
+                            title: 'Hello',
+                            context: context,
+                            subtitle: "Deleting...",
+                            style: FlutterSweetAlertStyle.loading,
+                            onPress: null,
+                          );
+                          new Future.delayed(new Duration(seconds: 2), () {
+                            FlutterSweetAlert.show(
+                              title: 'Yes',
+                              context: context,
+                              subtitle: "Success!",
+                              style: FlutterSweetAlertStyle.success,
+                              onPress: null,
+                            );
+                          });
+                        } else {
+                          FlutterSweetAlert.show(
+                            title: 'No',
+                            context: context,
+                            subtitle: "Canceled!",
+                            style: FlutterSweetAlertStyle.error,
+                            onPress: null,
+                          );
                         }
-
+                        // return false to keep dialog
+                        return false;
                       });
                 },
                 child: new Text("Try me"),
-                color: SweetAlert.success,
-                textColor: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterSweetAlert.success,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  // Background color
+                ),
+              ),
+              new Text("Do a job that may fail"),
+              new ElevatedButton(
+                onPressed: () {
+                  FlutterSweetAlert.show(
+                    title: '',
+                    context: context,
+                    subtitle: "Do you want to delete this message",
+                    style: FlutterSweetAlertStyle.confirm,
+                    showCancelButton: true,
+                    onPress: (bool isConfirm) {
+                      if (isConfirm) {
+                        //Return false to keep dialog
+                        if (isConfirm) {
+                          FlutterSweetAlert.show(
+                            title: '',
+                            onPress: null,
+                            context: context,
+                            subtitle: "Deleting...",
+                            style: FlutterSweetAlertStyle.loading,
+                          );
+                          new Future.delayed(new Duration(seconds: 2), () {
+                            FlutterSweetAlert.show(
+                              title: '',
+                              onPress: null,
+                              context: context,
+                              subtitle: "Job fail!",
+                              style: FlutterSweetAlertStyle.error,
+                            );
+                          });
+                        } else {
+                          FlutterSweetAlert.show(
+                            title: '',
+                            onPress: null,
+                            context: context,
+                            subtitle: "Canceled!",
+                            style: FlutterSweetAlertStyle.error,
+                          );
+                        }
+                        return false;
+                      }
+                      return true;
+                    },
+                  );
+                },
+                child: new Text("Try me"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterSweetAlert.success,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  // Background color
+                ),
               ),
             ],
           ),
@@ -187,58 +278,58 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class MyPainter extends CustomPainter {
-  Paint _paint = new Paint();
+// class MyPainter extends CustomPainter {
+//   Paint _paint = new Paint();
 
-  double _r = 32.0;
-  double factor = 0.96;
+//   double _r = 32.0;
+//   double factor = 0.96;
 
-  double strokeStart;
-  double strokeEnd;
-  double total = 0;
+//   double strokeStart;
+//   double strokeEnd;
+//   double total = 0;
 
-  double _strokeStart;
-  double _strokeEnd;
+//   late double _strokeStart;
+//   late double _strokeEnd;
 
-  MyPainter({this.strokeEnd, this.strokeStart}) {
-    _paint.color = Color(0xff96d873);
-    _paint.strokeCap = StrokeCap.round;
-    _paint.style = PaintingStyle.stroke;
-    _paint.strokeWidth = 4.0;
+//   MyPainter({required this.strokeEnd, required this.strokeStart}) {
+//     _paint.color = Color(0xff96d873);
+//     _paint.strokeCap = StrokeCap.round;
+//     _paint.style = PaintingStyle.stroke;
+//     _paint.strokeWidth = 4.0;
 
-    Path path = new Path();
-    path.addArc(new Rect.fromCircle(center: new Offset(_r, _r), radius: _r),
-        math.radians(60.0 - 30.0), math.radians(-200.0));
-    path.lineTo(24.0, 46.0);
-    path.lineTo(49.0, 18.0);
-    PathMetrics metrics;
-    metrics = path.computeMetrics();
-    for (PathMetric pathMetric in metrics) {
-      total += pathMetric.length;
-    }
+//     Path path = new Path();
+//     path.addArc(new Rect.fromCircle(center: new Offset(_r, _r), radius: _r),
+//         math.radians(60.0 - 30.0), math.radians(-200.0));
+//     path.lineTo(24.0, 46.0);
+//     path.lineTo(49.0, 18.0);
+//     PathMetrics metrics;
+//     metrics = path.computeMetrics();
+//     for (PathMetric pathMetric in metrics) {
+//       total += pathMetric.length;
+//     }
 
-    _strokeStart = strokeStart * total;
-    _strokeEnd = strokeEnd * total;
-  }
+//     _strokeStart = strokeStart * total;
+//     _strokeEnd = strokeEnd * total;
+//   }
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    double current = 0;
-    Path path = new Path();
-    path.addArc(new Rect.fromCircle(center: new Offset(_r, _r), radius: _r),
-        math.radians(60.0 - 30.0), math.radians(-200.0));
-    path.lineTo(24.0, 46.0);
-    path.lineTo(49.0, 18.0);
-    PathMetrics metrics = path.computeMetrics();
-    for (PathMetric pathMetric in metrics) {
-      canvas.drawPath(
-          pathMetric.extractPath(_strokeStart, _strokeEnd - current), _paint);
-    }
-  }
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     double current = 0;
+//     Path path = new Path();
+//     path.addArc(new Rect.fromCircle(center: new Offset(_r, _r), radius: _r),
+//         math.radians(60.0 - 30.0), math.radians(-200.0));
+//     path.lineTo(24.0, 46.0);
+//     path.lineTo(49.0, 18.0);
+//     PathMetrics metrics = path.computeMetrics();
+//     for (PathMetric pathMetric in metrics) {
+//       canvas.drawPath(
+//           pathMetric.extractPath(_strokeStart, _strokeEnd - current), _paint);
+//     }
+//   }
 
-  @override
-  bool shouldRepaint(MyPainter oldDelegate) {
-    return strokeStart != oldDelegate.strokeStart ||
-        strokeEnd != oldDelegate.strokeEnd;
-  }
-}
+//   @override
+//   bool shouldRepaint(MyPainter oldDelegate) {
+//     return strokeStart != oldDelegate.strokeStart ||
+//         strokeEnd != oldDelegate.strokeEnd;
+//   }
+// }

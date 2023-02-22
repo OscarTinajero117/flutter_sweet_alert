@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
+// import 'dart:math' as Math;
 import 'package:vector_math/vector_math_64.dart' as math;
-import 'dart:ui';
-import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
+// import 'dart:ui';
+// import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 
 class ConfirmView extends StatefulWidget {
   @override
@@ -13,24 +13,35 @@ class ConfirmView extends StatefulWidget {
 
 class ConfirmViewState extends State<ConfirmView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
-  Animation<Color> animation;
+  late Animation<Color?> animation;
 
   @override
   void initState() {
-    int factor = 50;
-    animationController = new AnimationController(vsync: this);
-    animation =
-        new ColorTween(begin: new Color(0xffF7D58B), end: new Color(0xffF2A665))
-            .animate(animationController);
-
-    //delay
-    new Future.delayed(new Duration(milliseconds: 200)).then((_) {
-      forward();
-    });
-
     super.initState();
+    // int factor = 50;
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+    animation = ColorTween(
+      begin: Color(0xffF7D58B),
+      end: Color(0xffF2A665),
+    ).animate(animationController);
+
+    animationController.forward();
+
+    animation.addStatusListener((status) {
+      // Agrega un listener a la animación
+      if (status == AnimationStatus.completed) {
+        // La animación ha finalizado, ahora puedes utilizar la animación
+      }
+    });
+    //delay
+    // Future.delayed(Duration(milliseconds: 200)).then((_) {
+    //   forward();
+    // });
   }
 
   void forward() {
@@ -53,7 +64,7 @@ class ConfirmViewState extends State<ConfirmView>
 
   @override
   void dispose() {
-    animationController?.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -63,7 +74,7 @@ class ConfirmViewState extends State<ConfirmView>
         animation: animationController,
         builder: (c, w) {
           return new CustomPaint(
-            painter: new _CustomPainter(color: animation.value),
+            painter: new _CustomPainter(color: animation.value ?? Colors.green),
           );
         });
   }
@@ -77,7 +88,7 @@ class _CustomPainter extends CustomPainter {
   double _r = 32.0;
   double factor = 0.96;
 
-  _CustomPainter({this.color}) {
+  _CustomPainter({required this.color}) {
     _paint.strokeCap = StrokeCap.round;
     _paint.style = PaintingStyle.stroke;
     _paint.strokeWidth = 4.0;
